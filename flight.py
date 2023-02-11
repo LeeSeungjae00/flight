@@ -4,8 +4,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 import requests
 import json
+from selenium.webdriver.common.by import By
 
-# 웹 드라이버 초기화
 def set_chrome_driver():
     chrome_options = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -25,13 +25,13 @@ def get_min_price():
     while(1):
         try:
             path = "/html/body/div[1]/div/div[1]/div[6]/div/div[3]/div[1]/div/div[2]/div/div/div/div/b/i"
-            min_price = driver.find_element_by_xpath(path).get_attribute('innerText')
+            min_price = driver.find_element(By.XPATH,path).text
             return min_price
         except Exception as e:
+            print(e)
             a = 1
 
     return '123'
-# 비어있는 text
 
 while(1):
     price = get_min_price()
@@ -39,7 +39,7 @@ while(1):
     int_price = int(int_price)
 
     if int_price < 360000:
-        url = "https://hooks.slack.com/services/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"
+        url = "https://hooks.slack.com/services/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"
         # response = requests.get(url_items)
 
         headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
@@ -48,6 +48,6 @@ while(1):
         }
         response = requests.post(url, headers=headers, data=json.dumps(body, ensure_ascii=False, indent="\t"))
         print(response)
-        print("떳다")
+        print("boom")
     print(int_price)
 
